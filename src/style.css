@@ -1,0 +1,91 @@
+:root {
+    font-family: monospace, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+
+    --primary-color: #7b60a6;
+    --secondary-color: #d4c8bb;
+    --bg-color: #191818;
+    --bg-lighter: #1d1c1c;
+
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: var(--bg-color);
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+}
+
+li {
+    text-decoration: none;
+    list-style: none;
+}
+
+ul {
+    padding: 0;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header, main, footer {
+    padding: 0 20%;
+}
+
+header {
+    display: flex;
+    gap: 2rem;
+    background: var(--primary-color);
+    box-shadow: 0 0 10px #00000012;
+}
+
+main {
+    flex: 1;
+}
+
+footer {
+    background: var(--bg-lighter);
+}
+
+.container .active {
+    font-weight: bolder;
+    color: var(--primary-color);
+}
+
+.container {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.container .todos {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 350px);
+    gap: 1rem;
+}
+
+.container .todo {
+    background: var(--bg-lighter);
+    padding: .1rem 1rem;
+    position: relative;
+}
+
+.container .todo span {
+    position: absolute;
+    top: .5rem;
+    right: 1rem;
+}
