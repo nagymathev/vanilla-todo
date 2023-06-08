@@ -1,5 +1,6 @@
 import Projects from './todo/todo-folder.ts';
 import TodoList from "./todo/todo-list.ts";
+import inputModal from './inputModal.ts';
 
 class Todo {
     title: string;
@@ -37,12 +38,38 @@ export let folders: Folder[] = [
 ]
 
 export default function main() {
+    let app = document.querySelector("#app")!;
     let main = document.createElement("main");
     let container = document.createElement("div")
     container.classList.add("container");
     main.appendChild(container);
-    container.appendChild(Projects(folders));
-    container.appendChild(TodoList());
+
+    let todoContainer = document.createElement("div");
+    todoContainer.classList.add("todo-container");
+    todoContainer.appendChild(Projects(folders));
+    todoContainer.appendChild(TodoList());
+
+    let buttonContainer = document.createElement("div");
+    buttonContainer.classList.add("buttons");
+
+    let newProjectButton = document.createElement("button")
+    newProjectButton.innerText = "Add new Project";
+    buttonContainer.appendChild(newProjectButton);
+    newProjectButton.addEventListener("click", () => {
+        app.appendChild(inputModal());
+        document.querySelector<HTMLHeadingElement>(".modal h1")!.innerText = "New Project";
+    })
+
+    let newTodoButton = document.createElement("button");
+    newTodoButton.innerText = "Add new Todo";
+    buttonContainer.appendChild(newTodoButton);
+    newTodoButton.addEventListener("click", () => {
+        app.appendChild(inputModal());
+        document.querySelector<HTMLHeadingElement>(".modal h1")!.innerText = "New Todo";
+    })
+
+    container.appendChild(buttonContainer);
+    container.appendChild(todoContainer);
 
     return main;
 }
