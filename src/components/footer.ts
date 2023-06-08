@@ -1,7 +1,5 @@
 export default function footer() {
-    return `
-        <footer>
-        This is a footer!
-        </footer>
-    `
+    let footer = document.createElement("footer");
+    footer.innerText = "This is a footer!";
+    return footer;
 }
