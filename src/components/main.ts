@@ -37,12 +37,12 @@ export let folders: Folder[] = [
 ]
 
 export default function main() {
-    return `
-        <main>
-            <div class="container">
-                ${Projects(folders)}
-                ${TodoList()}
-            </div>
-        </main>
-    `
+    let main = document.createElement("main");
+    let container = document.createElement("div")
+    container.classList.add("container");
+    main.appendChild(container);
+    container.appendChild(Projects(folders));
+    container.appendChild(TodoList());
+
+    return main;
 }
