@@ -1,5 +1,7 @@
-import inputModal from './inputModal.ts';
-import {addNewTodo} from "../main.ts";
+import inputModal, {closeModal} from './inputModal.ts';
+import {addNewTodo, Todo} from "../main.ts";
+import {getCurrentProject} from "../todo/todo-folder.ts";
+import {refreshTodos} from "../todo/todo-list.ts";
 
 export default function () {
     let backdrop = inputModal();
@@ -26,7 +28,9 @@ export default function () {
     modal.appendChild(submitButton);
 
     submitButton.addEventListener("click", () => {
-        addNewTodo()
+        addNewTodo(getCurrentProject(), new Todo(titleInput.value, descInput.value, (new Date).toDateString()));
+        refreshTodos();
+        closeModal();
     })
 
     return backdrop;

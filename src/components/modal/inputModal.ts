@@ -22,4 +22,5 @@ export default function () {
 
 export function closeModal() {
     backdrop.remove();
+    backdrop.innerHTML = "";
 }

@@ -3,7 +3,7 @@ import TodoList from "./todo/todo-list.ts";
 import newTodoModal from './modal/newTodoModal.ts';
 import newProjectModal from "./modal/newProjectModal.ts";
 
-class Todo {
+export class Todo {
     title: string;
     text: string;
     due_date: string;

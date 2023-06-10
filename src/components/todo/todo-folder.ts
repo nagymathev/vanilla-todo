@@ -2,7 +2,7 @@ import {Folder, getProjects} from '../main.ts'
 import { refreshTodos } from "./todo-list.ts";
 
 let parent = document.createElement("ul");
-let currentActive: HTMLLIElement;
+let currentActive: Folder;
 
 export default function () {
     refreshFolders();
@@ -33,7 +33,8 @@ function selectFirstFolder() {
 
 function setActive(elem: HTMLElement) {
     elem.classList.add("active");
-    refreshTodos(getProjects(), parseInt(elem.dataset.id!));
+    currentActive = getProjects()[parseInt(elem.dataset.id!)]
+    refreshTodos();
 }
 
 export function refreshFolders() {
@@ -44,9 +45,7 @@ export function refreshFolders() {
         if (fldr.id === folders.length - 1) setActive(elem);
         elem.addEventListener("click", () => {
             resetFolders();
-            elem.classList.add("active");
-            currentActive = elem;
-            refreshTodos(folders, fldr.id);
+            setActive(elem);
         })
     }
 }
