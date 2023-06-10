@@ -1,14 +1,15 @@
 import {Folder} from "../main.ts";
 
+let todos = document.createElement("div");
+todos.classList.add("todos");
+
 export default function () {
-    let todos = document.createElement("div");
-    todos.classList.add("todos");
     // getTodos(folders);
     return todos
 }
 
-export function getTodos(folders: Folder[], id: number) {
-    let todos = document.querySelector<HTMLDivElement>(".todos")!;
+export function refreshTodos(folders: Folder[], id: number) {
+    resetTodos();
     for (const folder of folders) {
         if (folder.id !== id) continue;
         folder.todos.forEach(todo => {
@@ -24,4 +25,8 @@ export function getTodos(folders: Folder[], id: number) {
     }
 
     // return todos;
+}
+
+function resetTodos() {
+    todos.innerHTML = "";
 }

@@ -1,6 +1,7 @@
 import Projects from './todo/todo-folder.ts';
 import TodoList from "./todo/todo-list.ts";
-import inputModal from './inputModal.ts';
+import newTodoModal from './modal/newTodoModal.ts';
+import newProjectModal from "./modal/newProjectModal.ts";
 
 class Todo {
     title: string;
@@ -27,7 +28,7 @@ export class Folder {
     }
 }
 
-export let folders: Folder[] = [
+let folders: Folder[] = [
     new Folder("homework", [
         new Todo("Maths", "Algebra homewerk", new Date().toDateString()),
         new Todo("Maths 2", "Algebra homewerk 2", new Date().toDateString())
@@ -36,6 +37,26 @@ export let folders: Folder[] = [
         new Todo("Cleaning the pan", "I will cook soon so let's clean it!", new Date().toDateString())
     ])
 ]
+
+export function addNewProject(project: Folder) {
+    folders.push(project);
+}
+
+export function addNewTodo(project: Folder, todo: Todo) {
+    project.todos.push(todo);
+}
+
+export function removeProject(idx: number) {
+    folders.splice(idx, 1);
+}
+
+export function getProjects(): Folder[] {
+    return folders;
+}
+
+export function getProject(idx: number): Folder {
+    return folders[idx];
+}
 
 export default function main() {
     let app = document.querySelector("#app")!;
@@ -46,7 +67,7 @@ export default function main() {
 
     let todoContainer = document.createElement("div");
     todoContainer.classList.add("todo-container");
-    todoContainer.appendChild(Projects(folders));
+    todoContainer.appendChild(Projects());
     todoContainer.appendChild(TodoList());
 
     let buttonContainer = document.createElement("div");
@@ -56,7 +77,7 @@ export default function main() {
     newProjectButton.innerText = "Add new Project";
     buttonContainer.appendChild(newProjectButton);
     newProjectButton.addEventListener("click", () => {
-        app.appendChild(inputModal());
+        app.appendChild(newProjectModal());
         document.querySelector<HTMLHeadingElement>(".modal h1")!.innerText = "New Project";
     })
 
@@ -64,7 +85,7 @@ export default function main() {
     newTodoButton.innerText = "Add new Todo";
     buttonContainer.appendChild(newTodoButton);
     newTodoButton.addEventListener("click", () => {
-        app.appendChild(inputModal());
+        app.appendChild(newTodoModal());
         document.querySelector<HTMLHeadingElement>(".modal h1")!.innerText = "New Todo";
     })
 

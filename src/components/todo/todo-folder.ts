@@ -1,27 +1,56 @@
-import {Folder} from '../main.ts'
-import { getTodos } from "./todo-list.ts";
+import {Folder, getProjects} from '../main.ts'
+import { refreshTodos } from "./todo-list.ts";
 
-export default function (folders: Folder[]) {
-    let ul = document.createElement("ul");
-    getFolders(ul, folders);
+let parent = document.createElement("ul");
+let currentActive: HTMLLIElement;
 
-    return ul;
+export default function () {
+    refreshFolders();
+    selectFirstFolder();
+
+    return parent;
 }
 
-function getFolders(parent: HTMLElement, folders: Folder[]) {
-    let _fldrs = parent;
+function resetFolders() {
+    Array.from(parent.children).forEach(li => {
+        li.classList.remove("active");
+    })
+}
+
+function createFolder(fldr: Folder) {
+    let elem = document.createElement("li");
+    elem.dataset.id = `${fldr.id}`;
+    elem.innerText = fldr.name;
+    parent.appendChild(elem);
+    return elem;
+}
+
+function selectFirstFolder() {
+    resetFolders();
+    let first = parent.firstElementChild! as HTMLLIElement;
+    setActive(first);
+}
+
+function setActive(elem: HTMLElement) {
+    elem.classList.add("active");
+    refreshTodos(getProjects(), parseInt(elem.dataset.id!));
+}
+
+export function refreshFolders() {
+    let folders = getProjects();
+    parent.innerHTML = "";
     for (const fldr of folders) {
-        let elem = document.createElement("li");
-        elem.dataset.id = `${fldr.id}`;
-        elem.innerText = fldr.name;
-        _fldrs.appendChild(elem);
+        let elem = createFolder(fldr);
+        if (fldr.id === folders.length - 1) setActive(elem);
         elem.addEventListener("click", () => {
-            document.querySelector(".container .todos")!.innerHTML = "";
-            Array.from(document.querySelectorAll(".container li")).forEach(li => {
-                li.classList.remove("active");
-            })
+            resetFolders();
             elem.classList.add("active");
-            getTodos(folders, fldr.id);
+            currentActive = elem;
+            refreshTodos(folders, fldr.id);
         })
     }
+}
+
+export function getCurrentProject() {
+    return currentActive;
 }
