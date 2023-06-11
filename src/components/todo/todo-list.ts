@@ -1,4 +1,5 @@
 import {getCurrentProject} from "./todo-folder.ts";
+import {removeTodo} from "../main.ts";
 
 let todos = document.createElement("div");
 todos.classList.add("todos");
@@ -13,11 +14,30 @@ export function refreshTodos() {
     getCurrentProject().todos.forEach(todo => {
         let _todo = document.createElement("div");
         _todo.classList.add("todo");
-        _todo.innerHTML = `
-            <h3>${todo.title}</h3>
-            <p>${todo.text}</p>
-            <span>${todo.due_date}</span>
-        `
+        _todo.dataset.id = `${todo.id}`;
+
+        let h3 = document.createElement("h3");
+        h3.innerText = todo.title;
+        _todo.appendChild(h3);
+
+        let p = document.createElement("p");
+        p.innerText = todo.text;
+        _todo.appendChild(p);
+
+        let span = document.createElement("span");
+        span.innerText = todo.due_date;
+        _todo.appendChild(span);
+
+        let deleteButton = document.createElement("button");
+        deleteButton.innerText = "Delete";
+        deleteButton.classList.add("delete-button");
+        _todo.appendChild(deleteButton);
+
+        deleteButton.addEventListener("click", () => {
+            removeTodo(getCurrentProject(), todo);
+            refreshTodos();
+        })
+
         todos.appendChild(_todo);
     })
 

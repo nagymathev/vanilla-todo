@@ -1,14 +1,17 @@
-import Projects from './todo/todo-folder.ts';
+import Projects, {getCurrentProject, refreshFolders} from './todo/todo-folder.ts';
 import TodoList from "./todo/todo-list.ts";
 import newTodoModal from './modal/newTodoModal.ts';
 import newProjectModal from "./modal/newProjectModal.ts";
 
 export class Todo {
+    static id_counter = 0;
+    id: number;
     title: string;
     text: string;
     due_date: string;
 
     constructor(title: string, text: string, due_date: string) {
+        this.id = Todo.id_counter++;
         this.title = title;
         this.text = text;
         this.due_date = due_date;
@@ -46,8 +49,14 @@ export function addNewTodo(project: Folder, todo: Todo) {
     project.todos.push(todo);
 }
 
-export function removeProject(idx: number) {
+export function removeProject(project: Folder) {
+    let idx = folders.indexOf(project, 0)
     folders.splice(idx, 1);
+}
+
+export function removeTodo(project: Folder, todo: Todo) {
+    let idx = project.todos.indexOf(todo, 0)
+    project.todos.splice(idx, 1);
 }
 
 export function getProjects(): Folder[] {
@@ -87,6 +96,14 @@ export default function main() {
     newTodoButton.addEventListener("click", () => {
         app.appendChild(newTodoModal());
         document.querySelector<HTMLHeadingElement>(".modal h1")!.innerText = "New Todo";
+    })
+
+    let deleteProjectButton = document.createElement("button");
+    deleteProjectButton.innerText = "Delete Project";
+    buttonContainer.appendChild(deleteProjectButton);
+    deleteProjectButton.addEventListener("click", () => {
+        removeProject(getCurrentProject());
+        refreshFolders();
     })
 
     container.appendChild(buttonContainer);

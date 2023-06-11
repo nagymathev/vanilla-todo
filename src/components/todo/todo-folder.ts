@@ -33,7 +33,11 @@ function selectFirstFolder() {
 
 function setActive(elem: HTMLElement) {
     elem.classList.add("active");
-    currentActive = getProjects()[parseInt(elem.dataset.id!)]
+    let projects = getProjects();
+    for (const project of projects) {
+        if (project.id !== parseInt(elem.dataset.id!)) continue;
+        currentActive = project;
+    }
     refreshTodos();
 }
 

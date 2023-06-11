@@ -147,13 +147,28 @@ footer {
     background: var(--bg-lighter);
     border: var(--bg-lighter) 1px solid;
     transition: border 100ms ease-in-out;
-    padding: .1rem 1rem;
+    padding: 1rem 1rem 2rem;
     position: relative;
     user-select: none;
+    word-wrap: break-word;
 }
 
 .container .todo span {
     position: absolute;
     top: .5rem;
     right: 1rem;
+}
+
+.delete-button {
+    position: absolute;
+    bottom: .5rem;
+    right: .5rem;
+    background: var(--bg-color);
+    border: var(--bg-lighter) solid 1px;
+    padding: .2rem .5rem;
+    transition: background-color 100ms ease-in-out;
+}
+
+.delete-button:hover {
+    background: var(--primary-color);
 }
